@@ -1,0 +1,5 @@
+[user]
+	name = Manuel Palumbo
+	email = manuel.palumbo@email.com
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret

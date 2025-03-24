@@ -1,0 +1,6 @@
+
+[Default Applications]
+x-scheme-handler/discord=vesktop.desktop
+inode/directory=org.gnome.Nautilus.desktop
+x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
+x-scheme-handler/betterdiscord=discord.desktop

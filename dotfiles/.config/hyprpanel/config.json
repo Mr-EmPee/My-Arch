@@ -57,5 +57,7 @@
   "bar.autoHide": "never",
   "theme.bar.location": "top",
   "theme.bar.floating": false,
-  "theme.bar.buttons.enableBorders": false
+  "theme.bar.buttons.enableBorders": false,
+  "menus.power.lowBatteryNotification": true,
+  "bar.clock.format": "%I:%M:%S %p"
 }
