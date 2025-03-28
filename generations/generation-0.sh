@@ -54,4 +54,5 @@ sudo systemctl enable sddm
 # Apps
 sudo pacman -S kitty \
   firefox \
-  stow
+  stow \
+  btop
