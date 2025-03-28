@@ -1,0 +1,14 @@
+{
+    "version": "1.12.1",
+    "drawerStates": {
+        "settings": {
+            "store": false,
+            "addons": true
+        }
+    },
+    "addonlistControls": {
+        "theme-store": {
+            "sort": "modified"
+        }
+    }
+}
