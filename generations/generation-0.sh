@@ -12,22 +12,28 @@ echo "- Install Hyprpanel"
 echo "- Install rofi"
 echo "- Install Kitty"
 
-# Hyprland Installation
+# Hyprland + Essentials Installation
 sudo pacman -S sddm \
-	       hyprland \
-	       noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd \
-	       nwg-look papirus-icon-theme \
-	       xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
-	       gnome-keyring libsecret \
-	       alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse \
-	       intel-media-driver \
-	       rofi-wayland \
-	       stow \
-	       kitty
+  hyprland \
+  noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd \
+  nwg-look papirus-icon-theme \
+  xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
+  gnome-keyring libsecret \
+  alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse \
+  intel-media-driver \
+  rofi-wayland \
+  stow \
+  kitty
 
 # HyPrPanel Installation
 sudo pacman -S network-manager-applet brightnessctl wf-recorder hyprpicker power-profiles-daemon pacman-contrib
 yay -S ags-hyprpanel-git
+
+# SDDM Theme
+yay -S sddm-astronaut-theme
+# Replace active sddm theme
+sudo sed -i 's/^Current=.*/Current=sddm-astronaut-theme/' /usr/lib/sddm/sddm.conf.d/default.conf
+sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
 
 # Services
 sudo systemctl enable sddm
