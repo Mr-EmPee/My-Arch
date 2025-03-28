@@ -55,5 +55,6 @@
   "menus.clock.time.military": true,
   "hyprpanel.restartCommand": "uwsm app -- hyprpanel -q; hyprpanel",
   "menus.power.lowBatteryNotification": true,
-  "bar.clock.format": "%I:%M:%S %p"
+  "bar.clock.format": "%H:%M:%S",
+  "menus.clock.time.hideSeconds": false
 }
