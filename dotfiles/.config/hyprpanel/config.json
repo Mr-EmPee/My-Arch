@@ -57,5 +57,7 @@
   "menus.power.lowBatteryNotification": true,
   "bar.clock.format": "%H:%M:%S",
   "menus.clock.time.hideSeconds": false,
-  "menus.dashboard.powermenu.logout": "loginctl terminate-user \"\""
+  "menus.dashboard.powermenu.logout": "uwsm stop",
+  "menus.dashboard.powermenu.avatar.name": "Mr. EmPee",
+  "menus.dashboard.shortcuts.enabled": false
 }

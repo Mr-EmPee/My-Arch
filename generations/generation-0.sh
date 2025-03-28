@@ -1,51 +1,57 @@
 #!/bin/sh
 
-echo "This script is performing the following actions:"
-echo "- Install SDDM"
-echo "- Install Hyprland"
-echo "- Install Dekstop-Portals"
-echo "- Install Keyring"
-echo "- Install Intel Graphics Drivers"
-echo "- Install Audio & Screen utils"
-echo "- Install Stow"
-echo "- Install Hyprpanel"
-echo "- Install rofi"
-echo "- Install Kitty"
+# Drivers
+sudo pacman -S intel-media-driver
+sudo systemctl enable bluetooth
 
-# Hyprland + Essentials Installation
-sudo pacman -S sddm \
-  hyprland \
+# Audio
+sudo pacman -S alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse
+
+# D-Bus
+sudo pacman -S xdg-desktop-portal xdg-desktop-portal-gtk \
+  gnome-keyring libsecret
+
+# Hyprland
+sudo pacman -S hyprland \
   swww \
   hyprlock \
   hyprpolkitagent \
-  noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd \
-  nwg-look papirus-icon-theme \
-  xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
-  gnome-keyring libsecret \
-  alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse \
-  intel-media-driver \
-  rofi-wayland \
-  stow \
-  kitty
+  xdg-desktop-portal-hyprland
 
-# HyPrPanel Installation
-sudo pacman -S network-manager-applet brightnessctl wf-recorder hyprpicker power-profiles-daemon pacman-contrib
+systemctl --user enable hyprpolkitagent.service
+
+# Hyprpanel
+sudo pacman -S brightnessctl hyprpicker power-profiles-daemon pacman-contrib
 yay -S ags-hyprpanel-git
 
-# Netowrk-Manager vpn plugins
-sudo pacman -S webkit2gtk-4.1 \
+# Wayland
+sudo pacman -S rofi-wayland
+
+# Theming
+sudo pacman -S nwg-look papirus-icon-theme \
+  noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd
+
+# Screenshot
+sudo pacman -S grim slurp
+yay -S wayfreeze-git
+
+# Netowrk-Manager
+sudo pacman -S network-manager-applet \
+  webkit2gtk-4.1 \
   libnma-gtk4 networkmanager-openvpn \
   networkmanager-openconnect \
   networkmanager-vpnc
 
-# SDDM Theme
+# SDDM
+sudo pacman -S sddm
 yay -S sddm-astronaut-theme
-# Replace active sddm theme
+
 sudo sed -i 's/^Current=.*/Current=sddm-astronaut-theme/' /usr/lib/sddm/sddm.conf.d/default.conf
 sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
 
-# Services
 sudo systemctl enable sddm
-sudo systemctl enable bluetooth
 
-systemctl --user enable hyprpolkitagent.service
+# Apps
+sudo pacman -S kitty \
+  firefox \
+  stow
