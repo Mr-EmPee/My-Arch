@@ -15,6 +15,8 @@ echo "- Install Kitty"
 # Hyprland + Essentials Installation
 sudo pacman -S sddm \
   hyprland \
+  swww \
+  hyprpolkitagent \
   noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd \
   nwg-look papirus-icon-theme \
   xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
@@ -29,6 +31,12 @@ sudo pacman -S sddm \
 sudo pacman -S network-manager-applet brightnessctl wf-recorder hyprpicker power-profiles-daemon pacman-contrib
 yay -S ags-hyprpanel-git
 
+# Netowrk-Manager vpn plugins
+sudo pacman -S webkit2gtk-4.1 \
+  libnma-gtk4 networkmanager-openvpn \
+  networkmanager-openconnect \
+  networkmanager-vpnc
+
 # SDDM Theme
 yay -S sddm-astronaut-theme
 # Replace active sddm theme
@@ -38,3 +46,5 @@ sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share
 # Services
 sudo systemctl enable sddm
 sudo systemctl enable bluetooth
+
+systemctl --user enable hyprpolkitagent.service
