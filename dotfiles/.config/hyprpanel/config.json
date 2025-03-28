@@ -56,5 +56,6 @@
   "hyprpanel.restartCommand": "uwsm app -- hyprpanel -q; hyprpanel",
   "menus.power.lowBatteryNotification": true,
   "bar.clock.format": "%H:%M:%S",
-  "menus.clock.time.hideSeconds": false
+  "menus.clock.time.hideSeconds": false,
+  "menus.dashboard.powermenu.logout": "loginctl terminate-user \"\""
 }

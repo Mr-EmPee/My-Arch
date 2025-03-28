@@ -16,6 +16,7 @@ echo "- Install Kitty"
 sudo pacman -S sddm \
   hyprland \
   swww \
+  hyprlock \
   hyprpolkitagent \
   noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd \
   nwg-look papirus-icon-theme \
