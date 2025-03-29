@@ -2,13 +2,16 @@
     "version": "1.12.1",
     "drawerStates": {
         "settings": {
-            "store": false,
-            "addons": true
+            "store": true,
+            "addons": true,
+            "window": true,
+            "editor": true,
+            "developer": true
         }
     },
     "addonlistControls": {
         "theme-store": {
-            "sort": "modified"
+            "sort": "downloads"
         }
     }
 }
