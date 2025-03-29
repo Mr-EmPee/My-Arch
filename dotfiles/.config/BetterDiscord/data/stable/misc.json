@@ -1,17 +1,3 @@
 {
-    "version": "1.12.1",
-    "drawerStates": {
-        "settings": {
-            "store": true,
-            "addons": true,
-            "window": true,
-            "editor": true,
-            "developer": true
-        }
-    },
-    "addonlistControls": {
-        "theme-store": {
-            "sort": "downloads"
-        }
-    }
+    "version": "1.12.1"
 }

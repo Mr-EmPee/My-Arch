@@ -1,10 +1,9 @@
 {
-    "CallTimeCounter": true,
-    "InvisibleTyping": true,
-    "DoNotTrack": true,
-    "FileViewer": true,
-    "ZeresPluginLibrary": true,
-    "CollapsibleUI": true,
-    "Uncompressed Images": false,
-    "UrbanDictionary": true
+    "ZeresPluginLibrary": false,
+    "CallTimeCounter": false,
+    "CollapsibleUI": false,
+    "DoNotTrack": false,
+    "FileViewer": false,
+    "InvisibleTyping": false,
+    "UrbanDictionary": false
 }
