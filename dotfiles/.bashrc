@@ -5,3 +5,5 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
 PS1='\w 󰘧 '
+
+export TERM=xterm-256color
