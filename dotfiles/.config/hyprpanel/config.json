@@ -57,5 +57,9 @@
   "bar.clock.format": "%H:%M:%S",
   "menus.clock.time.hideSeconds": false,
   "menus.dashboard.powermenu.avatar.name": "Mr. EmPee",
-  "menus.dashboard.shortcuts.enabled": false
+  "menus.dashboard.shortcuts.enabled": false,
+  "menus.dashboard.directories.enabled": false,
+  "bar.workspaces.applicationIconMap": {
+    "class:jetbrains-webstorm$": ""
+  }
 }
