@@ -53,11 +53,9 @@
   "bar.workspaces.showApplicationIcons": true,
   "menus.clock.weather.enabled": false,
   "menus.clock.time.military": true,
-  "hyprpanel.restartCommand": "uwsm app -- hyprpanel -q; hyprpanel",
   "menus.power.lowBatteryNotification": true,
   "bar.clock.format": "%H:%M:%S",
   "menus.clock.time.hideSeconds": false,
-  "menus.dashboard.powermenu.logout": "uwsm stop",
   "menus.dashboard.powermenu.avatar.name": "Mr. EmPee",
   "menus.dashboard.shortcuts.enabled": false
 }
