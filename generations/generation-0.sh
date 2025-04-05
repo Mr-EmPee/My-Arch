@@ -33,6 +33,9 @@ sudo pacman -S nwg-look papirus-icon-theme noto-fonts noto-fonts-cjk noto-fonts-
 sudo pacman -S grim slurp
 yay -S wayfreeze-git
 
+# Recording
+sudo pacman -S wf-recorder
+
 # Netowrk-Manager
 sudo pacman -S network-manager-applet \
   webkit2gtk-4.1 \
