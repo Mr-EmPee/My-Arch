@@ -61,5 +61,7 @@
   "menus.dashboard.directories.enabled": false,
   "bar.workspaces.applicationIconMap": {
     "class:jetbrains-webstorm$": ""
-  }
+  },
+  "bar.launcher.icon": "󰍳",
+  "menus.dashboard.powermenu.avatar.image": "~/.face.icon"
 }
