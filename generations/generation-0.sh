@@ -6,6 +6,9 @@ sudo pacman -S intel-media-driver
 # Audio
 sudo pacman -S alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse
 
+# Fonts
+sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd
+
 # D-Bus
 sudo pacman -S xdg-desktop-portal xdg-desktop-portal-gtk \
   gnome-keyring libsecret
@@ -17,8 +20,6 @@ sudo pacman -S hyprland \
   hyprpolkitagent \
   xdg-desktop-portal-hyprland
 
-sudo systemctl enable hyprpolkitagent
-
 # Hyprpanel
 sudo pacman -S brightnessctl hyprpicker power-profiles-daemon pacman-contrib
 yay -S ags-hyprpanel-git
@@ -27,7 +28,7 @@ yay -S ags-hyprpanel-git
 sudo pacman -S rofi-wayland
 
 # Theming
-sudo pacman -S nwg-look papirus-icon-theme noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd
+sudo pacman -S nwg-look papirus-icon-theme
 
 # Screenshot
 sudo pacman -S grim slurp
@@ -59,4 +60,5 @@ sudo systemctl enable bluetooth
 sudo pacman -S kitty \
   firefox \
   stow \
-  btop
+  btop \
+  nautilus
