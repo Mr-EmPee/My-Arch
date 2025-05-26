@@ -4,7 +4,7 @@
 sudo pacman -S intel-media-driver
 
 # Audio
-sudo pacman -S alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse
+sudo pacman -S alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse pipewire-alsa
 
 # Fonts
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd
