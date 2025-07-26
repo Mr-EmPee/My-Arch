@@ -18,7 +18,8 @@ sudo pacman -S hyprland \
   swww \
   hyprlock \
   hyprpolkitagent \
-  xdg-desktop-portal-hyprland
+  xdg-desktop-portal-hyprland \
+  xorg-xrandr
 
 # Hyprpanel
 sudo pacman -S brightnessctl hyprpicker power-profiles-daemon pacman-contrib
@@ -42,7 +43,7 @@ sudo pacman -S network-manager-applet \
   webkit2gtk-4.1 \
   libnma-gtk4 networkmanager-openvpn \
   networkmanager-openconnect \
-  networkmanager-vpnc
+  networkmanager-openvpn
 
 # SDDM
 sudo pacman -S sddm
@@ -52,7 +53,6 @@ sudo sed -i 's/^Current=.*/Current=sddm-astronaut-theme/' /usr/lib/sddm/sddm.con
 sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
 
 # Service enable
-
 sudo systemctl enable sddm
 sudo systemctl enable bluetooth
 
@@ -62,3 +62,6 @@ sudo pacman -S kitty \
   stow \
   btop \
   nautilus
+
+# Neovim
+sudo pacman -S ripgrep fd lazygit fzf
