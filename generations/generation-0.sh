@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Drivers
-sudo pacman -S intel-media-driver
+# System & Drivers
+sudo pacman -S intel-media-driver os-prober
 
 # Audio
 sudo pacman -S alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse pipewire-alsa
