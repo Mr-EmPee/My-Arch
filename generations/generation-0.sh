@@ -2,6 +2,7 @@
 
 # System & Drivers
 sudo pacman -S intel-media-driver os-prober
+sudo timedatectl set-ntp true
 
 # Audio
 sudo pacman -S alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse pipewire-alsa
