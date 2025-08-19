@@ -1,5 +1,13 @@
 #!/bin/sh
 
+echo "This script should be executed as USER (without sudo)"
+
+sleep 5
+
+# Dotfiles
+sudo pacman -S stow
+stow -d .. -t ~ dotfiles
+
 # System & Drivers
 sudo pacman -S intel-media-driver os-prober
 sudo timedatectl set-ntp true
@@ -62,6 +70,3 @@ sudo pacman -S kitty \
   firefox \
   btop \
   nautilus
-
-# Neovim
-sudo pacman -S ripgrep fd lazygit fzf
