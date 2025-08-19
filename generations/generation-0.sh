@@ -60,7 +60,6 @@ sudo systemctl enable bluetooth
 # Apps
 sudo pacman -S kitty \
   firefox \
-  stow \
   btop \
   nautilus
 
