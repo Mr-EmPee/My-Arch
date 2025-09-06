@@ -35,7 +35,7 @@ sudo pacman -S brightnessctl hyprpicker power-profiles-daemon pacman-contrib
 yay -S ags-hyprpanel-git
 
 # Wayland
-sudo pacman -S rofi-wayland
+sudo pacman -S rofi
 
 # Theming
 sudo pacman -S nwg-look papirus-icon-theme
