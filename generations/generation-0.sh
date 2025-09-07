@@ -34,7 +34,7 @@ sudo pacman -S hyprland \
 
 # Hyprpanel
 sudo pacman -S brightnessctl hyprpicker power-profiles-daemon pacman-contrib
-yay -S ags-hyprpanel-git
+yay --answerdiff None --answerclean None --removemake -S ags-hyprpanel-git
 
 # Wayland
 sudo pacman -S rofi
@@ -44,7 +44,7 @@ sudo pacman -S nwg-look papirus-icon-theme
 
 # Screenshot
 sudo pacman -S grim slurp
-yay -S wayfreeze-git
+yay --answerdiff None --answerclean None --removemake -S wayfreeze-git
 
 # Recording
 sudo pacman -S wf-recorder
@@ -58,7 +58,7 @@ sudo pacman -S network-manager-applet \
 
 # SDDM
 sudo pacman -S sddm
-yay -S sddm-astronaut-theme
+yay --answerdiff None --answerclean None --removemake -S sddm-astronaut-theme
 
 sudo sed -i 's/^Current=.*/Current=sddm-astronaut-theme/' /usr/lib/sddm/sddm.conf.d/default.conf
 sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
