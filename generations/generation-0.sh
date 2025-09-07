@@ -1,8 +1,10 @@
 #!/bin/sh
 
-echo "This script should be executed as USER (without sudo)"
-
-sleep 5
+if [ "$EUID" -eq 0 ]; then
+    echo "❌ Do not run this script as root or with sudo."
+    echo "Run it as your normal user. The script will ask for sudo when needed."
+    exit 1
+fi
 
 # Dotfiles
 sudo pacman -S stow
