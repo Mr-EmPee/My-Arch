@@ -6,8 +6,13 @@ if [ "$EUID" -eq 0 ]; then
     exit 1
 fi
 
+# Get the directory where the script itself is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Dotfiles
 sudo pacman -S stow
+
+stow -v -t ~ -d "$SCRIPT_DIR/../dotfiles" .
 
 # System & Drivers
 sudo pacman -S intel-media-driver os-prober
@@ -62,7 +67,9 @@ sudo pacman -S sddm
 yay --answerdiff None --answerclean None --removemake -S sddm-astronaut-theme
 
 sudo sed -i 's/^Current=.*/Current=sddm-astronaut-theme/' /usr/lib/sddm/sddm.conf.d/default.conf
-sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/hyprland_kath.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
+sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/custom.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
+
+bash "$SCRIPT_DIR/../scripts/theme/apply_theme.sh" "$SCRIPT_DIR/files/wallpaper.mp4"
 
 # Service enable
 sudo systemctl enable sddm
