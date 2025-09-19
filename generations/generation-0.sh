@@ -8,7 +8,6 @@ fi
 
 # Dotfiles
 sudo pacman -S stow
-stow -d .. -t ~ dotfiles
 
 # System & Drivers
 sudo pacman -S intel-media-driver os-prober
@@ -26,7 +25,6 @@ sudo pacman -S xdg-desktop-portal xdg-desktop-portal-gtk \
 
 # Hyprland
 sudo pacman -S hyprland \
-  swww \
   hyprlock \
   hyprpolkitagent \
   xdg-desktop-portal-hyprland \
@@ -35,6 +33,9 @@ sudo pacman -S hyprland \
 # Hyprpanel
 sudo pacman -S brightnessctl hyprpicker power-profiles-daemon pacman-contrib
 yay --answerdiff None --answerclean None --removemake -S ags-hyprpanel-git
+
+# Wallpaper
+yay --answerdiff None --answerclean None --removemake -S mpvpaper
 
 # Wayland
 sudo pacman -S rofi
