@@ -56,6 +56,9 @@ yay --answerdiff None --answerclean None --removemake -S wayfreeze-git
 # Recording
 sudo pacman -S wf-recorder
 
+# Notification
+sudo pacman -S mako
+
 # Netowrk-Manager
 sudo pacman -S network-manager-applet \
   webkit2gtk-4.1 \
@@ -76,8 +79,8 @@ bash "$SCRIPT_DIR/../scripts/theme/apply_theme.sh" "$SCRIPT_DIR/files/wallpaper.
 sudo systemctl enable sddm
 sudo systemctl enable bluetooth
 
+# Terminal
+sudo pacman -S alacritty tmux ttf-hack-nerd
+
 # Apps
-sudo pacman -S kitty \
-  firefox \
-  btop \
-  nautilus
+sudo pacman -S firefox btop nautilus
