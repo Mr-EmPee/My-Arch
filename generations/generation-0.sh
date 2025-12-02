@@ -25,19 +25,20 @@ sudo pacman -S alsa-utils pipewire wireplumber pipewire-jack pipewire-pulse pipe
 sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono-nerd
 
 # D-Bus
-sudo pacman -S xdg-desktop-portal xdg-desktop-portal-gtk \
-  gnome-keyring libsecret
+sudo pacman -S xdg-desktop-portal xdg-desktop-portal-gtk gnome-keyring libsecret
 
 # Hyprland
 sudo pacman -S hyprland \
   hyprlock \
   hyprpolkitagent \
   xdg-desktop-portal-hyprland \
-  xorg-xrandr
+  xorg-xrandr \
+  brightnessctl \
+  wl-clipboard \
+  ttf-jetbrains-mono-nerd
 
-# Hyprpanel
-sudo pacman -S brightnessctl hyprpicker power-profiles-daemon pacman-contrib
-yay --answerdiff None --answerclean None --removemake -S ags-hyprpanel-git
+# Waybar
+sudo pacman -S waybar power-profiles-daemon 
 
 # Wallpaper
 yay --answerdiff None --answerclean None --removemake -S mpvpaper
