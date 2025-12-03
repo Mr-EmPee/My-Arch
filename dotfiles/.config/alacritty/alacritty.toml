@@ -24,7 +24,7 @@ style = "Italic"
 
 [colors.primary]
 background = "#181825"
-foreground = "#CAD3F5"   # adjust if you want something from the image
+foreground = "#CAD3F5"
 
 [colors.normal]
 black   = "#161622"
@@ -37,7 +37,7 @@ cyan    = "#94E2D5"
 white   = "#3F3752"
 
 [window]
-opacity = 0.7
+opacity = 1
 
 [window.padding]
 x = 15
