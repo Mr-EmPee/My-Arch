@@ -13,8 +13,15 @@
         "tray",
         "memory",
         "wireplumber",
+	"custom/pacman",
         "battery"
     ],
+    "custom/pacman": {
+	"format": "{text} ",
+	"interval": 3600,
+	"exec": "checkupdates | wc -l",
+	"exec-if": "exit 0"
+    },
     "hyprland/workspaces": {
         "on-click": "activate",
         "format": "{icon}",
@@ -52,7 +59,7 @@
         "format": "  {:%I:%M %p}"
     },
     "wireplumber": {
-        "format": "{icon}",
+        "format": "{icon} ",
         "format-bluetooth": "󰂰",
         "nospacing": 1,
         "tooltip-format": "Volume : {volume}%",

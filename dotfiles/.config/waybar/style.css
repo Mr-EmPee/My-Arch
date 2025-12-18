@@ -51,6 +51,7 @@ window#waybar.hidden {
   background-color: #f38ba8;
 }
 
+#custom-pacman,
 #memory,
 #custom-power,
 #battery,
@@ -104,6 +105,9 @@ window#waybar.hidden {
   background-color: #f2cdcd;
 }
 
+#custom-pacman {
+  background-color: #EDBBBB;
+}
 
 tooltip {
   border-radius: 8px;
