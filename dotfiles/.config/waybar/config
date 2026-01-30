@@ -11,6 +11,7 @@
     ],
     "modules-right": [
         "tray",
+	"custom/ping",
         "memory",
         "wireplumber",
 	"custom/pacman",
@@ -20,6 +21,12 @@
 	"format": "{text} ",
 	"interval": 3600,
 	"exec": "checkupdates | wc -l",
+	"exec-if": "exit 0"
+    },
+    "custom/ping": {
+	"format": "{text} 󰐰",
+	"interval": 6,
+	"exec": "ping -c 1 google.it | grep -o 'time=[0-9]\\+' | cut -d= -f2",
 	"exec-if": "exit 0"
     },
     "hyprland/workspaces": {

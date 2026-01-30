@@ -51,6 +51,7 @@ window#waybar.hidden {
   background-color: #f38ba8;
 }
 
+#custom-ping,
 #custom-pacman,
 #memory,
 #custom-power,
@@ -107,6 +108,10 @@ window#waybar.hidden {
 
 #custom-pacman {
   background-color: #EDBBBB;
+}
+
+#custom-ping {
+  background-color: #caf1b7;
 }
 
 tooltip {
