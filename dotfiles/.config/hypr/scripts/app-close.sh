@@ -19,5 +19,9 @@ if [[ "$active_class" == "discord" ]]; then
     exit 0
 fi
 
+if [[ "$active_class" == "teams-for-linux" ]]; then
+    exit 0
+fi
+
 hyprctl dispatch killactive
 
