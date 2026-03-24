@@ -1,7 +1,7 @@
 [Default Applications]
 x-scheme-handler/discord=vesktop.desktop
 inode/directory=org.gnome.Nautilus.desktop
-x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
+x-scheme-handler/jetbrains=jetbrainsd.desktop
 x-scheme-handler/betterdiscord=discord.desktop
 x-scheme-handler/http=firefox.desktop
 x-scheme-handler/https=firefox.desktop
@@ -14,6 +14,7 @@ application/xhtml+xml=firefox.desktop
 application/x-extension-xhtml=firefox.desktop
 application/x-extension-xht=firefox.desktop
 x-scheme-handler/postman=Postman.desktop
+application/pdf=brave-browser.desktop
 
 [Added Associations]
 x-scheme-handler/http=firefox.desktop;
@@ -26,3 +27,4 @@ application/x-extension-shtml=firefox.desktop;
 application/xhtml+xml=firefox.desktop;
 application/x-extension-xhtml=firefox.desktop;
 application/x-extension-xht=firefox.desktop;
+application/pdf=brave-browser.desktop;
