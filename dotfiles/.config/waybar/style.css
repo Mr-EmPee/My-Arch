@@ -7,7 +7,7 @@
 }
 
 window#waybar {
-  background-color: #181825;
+  background-color: transparent; /*Old background: #181825; */
   transition-property: background-color;
   transition-duration: 0.5s;
 }
@@ -64,7 +64,7 @@ window#waybar.hidden {
   border-radius: 4px;
   margin: 6px 3px;
   padding: 6px 12px;
-  background-color: #1e1e2e;
+  background-color: #292437;
   color: #181825;
 }
 
