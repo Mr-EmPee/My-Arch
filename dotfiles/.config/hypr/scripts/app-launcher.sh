@@ -9,7 +9,19 @@ DESKTOP_DIRS=(
   "$HOME/.local/share/applications"
 )
 
+EXCLUDE_FILES=(
+  "jetbrainsd.desktop"
+)
+
 paths=()
+
+should_exclude() {
+  local file="$(basename "$1")"
+  for ex in "${EXCLUDE_FILES[@]}"; do
+    [[ "$file" == "$ex" ]] && return 0
+  done
+  return 1
+}
 
 for f in "${DESKTOP_FILES[@]}"; do
   paths+=("$f")
@@ -18,6 +30,9 @@ done
 for dir in "${DESKTOP_DIRS[@]}"; do
   for f in "$dir"/*.desktop; do
     [[ -e "$f" ]] || continue
+ 
+    should_exclude "$f" && continue
+
     paths+=("$f")
   done
 done
