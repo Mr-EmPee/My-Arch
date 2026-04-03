@@ -6,9 +6,8 @@ alias grep='grep --color=auto'
 
 PS1='\w 󰘧 '
 
-export PATH=$PATH:/home/empee/.dotnet/tools
 export TERM=xterm-256color
 
-if [ -f ~/.local.bashrc ]; then
-    source ~/.local.bashrc
+if [ -f ~/.local/.bashrc ]; then
+    source ~/.local/.bashrc
 fi
