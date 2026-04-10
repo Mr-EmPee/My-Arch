@@ -1,0 +1,12 @@
+# Run Minecraft server
+docker run -it \
+	   --name mc-temp \
+	   -p 25565:25565 \
+	   -e EULA=TRUE \
+	   -e TYPE=PAPER \
+	   -v $(pwd)/plugins:/data/plugins \
+	   -v $(pwd)/world:/data/world \
+	   itzg/minecraft-server
+
+# Other command
+echo "This is an exampple of another command"

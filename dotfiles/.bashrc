@@ -11,3 +11,5 @@ export TERM=xterm-256color
 if [ -f ~/.local/.bashrc ]; then
     source ~/.local/.bashrc
 fi
+
+alias fav='~/.config/hypr/scripts/fav-search.sh'
