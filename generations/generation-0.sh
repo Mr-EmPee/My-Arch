@@ -84,7 +84,7 @@ sudo systemctl enable sddm
 sudo systemctl enable bluetooth
 
 # Terminal
-sudo pacman -S alacritty tmux ttf-hack-nerd
+sudo pacman -S alacritty zellij ttf-hack-nerd
 
 # Apps
-sudo pacman -S firefox btop nautilus
+sudo pacman -S btop nautilus
