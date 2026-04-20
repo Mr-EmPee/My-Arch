@@ -13,7 +13,7 @@ while true; do
   status=$(cat "$BAT_PATH/status")
 
   if [[ "$status" != "Charging" && "$capacity" -lt 6 ]]; then
-    systemctl hibernate
+    systemctl suspend
   fi
 
   sleep 60
