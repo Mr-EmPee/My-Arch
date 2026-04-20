@@ -9,24 +9,38 @@ echo "Launched mpvpaper with PID $clientPid"
 last_state="none"
 
 while true; do
-    # Get current active window ID (empty if none)
-    active_window=$(hyprctl activewindow | awk '{print $2}')
+    active_info=$(hyprctl activewindow)
+
+    active_window=$(echo "$active_info" | awk '/Window/{print $2}')
+    opacity=$(echo "$active_info" | awk '/opacity/{print $2}')
 
     if [ -z "$active_window" ]; then
-        # No active window
         if [ "$last_state" != "none" ]; then
             echo "No active window - resuming mpvpaper"
             kill -CONT "$clientPid"
         fi
         last_state="none"
     else
-        # There is an active window
-        if [ "$last_state" == "none" ]; then
-            echo "Window is active - pausing mpvpaper"
-            kill -STOP "$clientPid"
+        # Default opacity fallback (in case parsing fails)
+        opacity=${opacity:-1.0}
+
+        # Only pause if window is effectively opaque
+        is_opaque=$(awk "BEGIN {print ($opacity >= 0.95)}")
+
+        if [ "$is_opaque" -eq 1 ]; then
+            if [ "$last_state" == "none" ]; then
+                echo "Opaque window active - pausing mpvpaper"
+                kill -STOP "$clientPid"
+            fi
+            last_state="active"
+        else
+            if [ "$last_state" != "none" ]; then
+                echo "Transparent window - resuming mpvpaper"
+                kill -CONT "$clientPid"
+            fi
+            last_state="none"
         fi
-        last_state="active"
     fi
 
-    sleep 0.2  # adjust polling interval
+    sleep 0.2
 done
