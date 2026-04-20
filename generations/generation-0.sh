@@ -35,6 +35,7 @@ sudo pacman -S hyprland \
   xorg-xrandr \
   brightnessctl \
   wl-clipboard \
+  wl-clip-persist \
   ttf-jetbrains-mono-nerd
 
 # Waybar
