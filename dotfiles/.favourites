@@ -15,3 +15,11 @@ docker run -it \
     ports:
       - "8080:8080"
       - "8081:8081"
+
+# Reclaim system space
+sudo du -h --max-depth=1 / | grep -E '^[0-9\.]+G'
+docker system prune
+sudo paccache -rk1
+rm -rf ~/.cache
+rm -rf ~/.local/share/Trash
+
