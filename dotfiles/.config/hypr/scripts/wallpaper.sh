@@ -10,7 +10,7 @@ last_state="none"
 
 while true; do
     # Get current active window ID (empty if none)
-    active_window=$(hyprctl activewindow -j | jq -r '.class')
+    active_window=$(hyprctl activewindow -j | jq -r '.class // empty')
 
     # Treat Alacritty as no active window
     if [ "$active_window" = "Alacritty" ]; then
