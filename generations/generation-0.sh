@@ -36,7 +36,8 @@ sudo pacman -S hyprland \
   brightnessctl \
   wl-clipboard \
   wl-clip-persist \
-  ttf-jetbrains-mono-nerd
+  ttf-jetbrains-mono-nerd \
+  qt5-wayland qt6-wayland
 
 # Waybar
 sudo pacman -S waybar power-profiles-daemon 
