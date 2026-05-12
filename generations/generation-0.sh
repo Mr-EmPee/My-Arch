@@ -61,6 +61,9 @@ sudo pacman -S wf-recorder
 # Notification
 sudo pacman -S mako
 
+# Others reguired by scripts
+sudo pacman -S jq
+
 # Netowrk-Manager
 sudo pacman -S network-manager-applet \
   webkit2gtk-4.1 \
@@ -75,10 +78,7 @@ yay --answerdiff None --answerclean None --removemake -S sddm-astronaut-theme
 sudo sed -i 's/^Current=.*/Current=sddm-astronaut-theme/' /usr/lib/sddm/sddm.conf.d/default.conf
 sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/custom.conf/' /usr/share/sddm/themes/sddm-astronaut-theme/metadata.desktop
 
-# Script utilities
 bash "$SCRIPT_DIR/../scripts/theme/apply_theme.sh" "$SCRIPT_DIR/files/wallpaper.mp4"
-
-sudo pacman -S jq
 
 # Service enable
 sudo systemctl enable sddm
