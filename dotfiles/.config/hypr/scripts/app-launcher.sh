@@ -11,6 +11,7 @@ DESKTOP_DIRS=(
 
 EXCLUDE_FILES=(
   "jetbrainsd.desktop"
+  "claude-code-url-handler.desktop"
 )
 
 paths=()
