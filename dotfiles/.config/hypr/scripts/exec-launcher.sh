@@ -6,6 +6,7 @@ FAV_LABELS=(
   "Restore terminal"
 )
 FAV_CMDS=(
+  #"alacritty && hyprctl dispatch 'hl.dsp.focus({ workspace = 2})'"
   "alacritty && hyprctl dispatch workspace 2"
 )
 

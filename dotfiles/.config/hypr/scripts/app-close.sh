@@ -21,5 +21,5 @@ if [[ "$active_class" == "teams-for-linux" ]]; then
     exit 0
 fi
 
+#hyprctl dispatch 'hl.dsp.window.kill()'
 hyprctl dispatch killactive
-
