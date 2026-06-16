@@ -28,7 +28,8 @@ sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-j
 sudo pacman -S xdg-desktop-portal xdg-desktop-portal-gtk gnome-keyring libsecret
 
 # Hyprland
-sudo pacman -S hyprland \
+sudo pacman -S uwsm \
+  hyprland \
   hyprlock \
   hyprpolkitagent \
   xdg-desktop-portal-hyprland \
