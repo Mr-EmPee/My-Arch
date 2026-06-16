@@ -61,7 +61,7 @@ index="$(
 
 [[ -n "$index" ]] || exit 0
 
-# rofi returns 0-based index
-chosen_id="${ids[$index]:-}"
+desktop_file="${paths[$index]:-}"
+[[ -f "$desktop_file" ]] || exit 1
 
-nohup gtk-launch "$chosen_id" >/dev/null 2>&1 & disown
+uwsm app -- "$desktop_file" &
