@@ -7,6 +7,7 @@ DESKTOP_FILES=(
 
 DESKTOP_DIRS=(
   "$HOME/.local/share/applications"
+  "$HOME/.local/share/flatpak/exports/share/applications"
 )
 
 EXCLUDE_FILES=(
