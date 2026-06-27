@@ -44,4 +44,32 @@ chown -R empee:empee /home/empee/yay-bin
 git clone https://github.com/Mr-EmPee/My-Arch.git /home/empee/My-Arch
 chown -R empee:empee /home/empee/My-Arch
 
-# Explain the command you need to execute
+cat <<'EOF'
+
+╭──────────────────────────────────────────────╮
+│              POST-INSTALL STEPS              │
+╰──────────────────────────────────────────────╯
+
+This script will continue the user-level setup for the Arch system.
+
+After rebooting, you can log in with:
+
+    username: empee
+    password: empee
+
+Then build and install yay manually with:
+
+    cd ~/yay-bin
+    makepkg -si
+
+Next, this script will run:
+
+    cd /home/empee/My-Arch
+    generations/generation-0.sh
+    stow --no-folding dotfiles
+
+Finally, apply the Rofi and GTK themes manually using:
+
+    nwg-look
+
+EOF

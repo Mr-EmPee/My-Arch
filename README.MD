@@ -1,10 +1,7 @@
-This started from a minimal installation of arch with the following packages:
-- base, linux, linux-firmware, sof-firmware, intel-ucode
-- grub, efibootmgr
-- base-devel, man-db
-- networkmanager
-- neovim
-- yay
+Download and run the script:
 
-Configurations:
-- sudoers, allows wheel group
+> ATTENTION! This script expect a CLEAN system with /mnt already mounted with /boot as EFI partition
+
+```bash
+curl -fsSLO https://raw.githubusercontent.com/Mr-EmPee/My-Arch/master/init.sh
+```
