@@ -14,8 +14,7 @@ sudo pacman -S stow
 
 stow -v -t ~ -d "$SCRIPT_DIR/../dotfiles" .
 
-# System & Drivers
-sudo pacman -S intel-media-driver os-prober
+# System Time
 sudo timedatectl set-ntp true
 
 # Audio
@@ -81,8 +80,10 @@ sudo sed -i 's/^ConfigFile=.*/ConfigFile=Themes\/custom.conf/' /usr/share/sddm/t
 
 bash "$SCRIPT_DIR/../scripts/theme/apply_theme.sh" "$SCRIPT_DIR/files/wallpaper.mp4"
 
-# Service enable
 sudo systemctl enable sddm
+
+# Bluetooth
+sudo pacman -S blueman bluez-utils
 sudo systemctl enable bluetooth
 
 # Terminal
