@@ -86,6 +86,9 @@ sudo systemctl enable sddm
 sudo pacman -S blueman bluez-utils
 sudo systemctl enable bluetooth
 
+# Android file transfer
+sudo pacman -S mtpfs gvfs-mtp libmtp
+
 # Terminal
 sudo pacman -S alacritty zellij ttf-hack-nerd
 
