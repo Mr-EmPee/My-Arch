@@ -1,3 +1,9 @@
-vim.opt.clipboard = "unnamedplus"
+require("config.options")
+require("config.keymaps")
 
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+local plugins_dir = vim.fn.stdpath("config") .. "/lua/plugins"
+for name, type in vim.fs.dir(plugins_dir) do
+    if type == "file" and name:match("%.lua$") then
+        require("plugins." .. name:gsub("%.lua$", ""))
+    end
+end

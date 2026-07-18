@@ -92,5 +92,9 @@ sudo pacman -S mtpfs gvfs-mtp libmtp
 # Terminal
 sudo pacman -S alacritty zellij ttf-hack-nerd
 
+# Neovim
+sudo pacman -S fzf # Telescope plugin
+sudo pacman -S tree-sitter-cli # Required for installing parsers
+
 # Apps
 sudo pacman -S btop nautilus
