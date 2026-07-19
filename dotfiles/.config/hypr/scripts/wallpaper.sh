@@ -14,7 +14,20 @@ while true; do
 
     # Treat Alacritty as no active window
     if [ "$active_window" = "Alacritty" ]; then
-        active_window=""
+       active_window=""
+    fi
+
+    ws=$(hyprctl -j activeworkspace | jq -r '.id')
+
+    all_floating=$(
+      hyprctl -j clients | jq -r --argjson ws "$ws" '
+        [.[] | select(.workspace.id == $ws)] |
+        length > 0 and all(.[]; .floating == true)
+      '
+    )
+
+    if [[ "$all_floating" == "true" ]]; then
+      active_window=""
     fi
 
     if [ -z "$active_window" ]; then
