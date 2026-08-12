@@ -325,7 +325,7 @@ hl.window_rule({
 hl.window_rule({
     name      = "workspace-3-apps",
     match     = {
-        class = "^(jetbrains-idea|code-oss|jetbrains-rider)$",
+        class = "^(jetbrains-idea|code|jetbrains-rider)$",
         float = false,
     },
     workspace = 3,
@@ -377,6 +377,16 @@ hl.window_rule({
     float = true,
     move  = "687 264",
     size  = "1041 691",
+})
+
+hl.window_rule({
+    name  = "floating-networkmanager",
+    match = {
+        class = "^(nm-connection-editor)$",
+    },
+    float = true,
+    move  = "800 100",
+    size  = "1000 700",
 })
 
 hl.window_rule({
