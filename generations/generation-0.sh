@@ -12,6 +12,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Dotfiles
 sudo pacman -S stow
 
+mkdir -p ~/.config ~/.local ~/.wallpapers
+
 stow -v -t ~ -d "$SCRIPT_DIR/../dotfiles" .
 
 # System Time
@@ -62,7 +64,7 @@ sudo pacman -S wf-recorder
 sudo pacman -S mako
 
 # Others reguired by scripts
-sudo pacman -S jq
+sudo pacman -S jq pacutils
 
 # Netowrk-Manager
 sudo pacman -S network-manager-applet \

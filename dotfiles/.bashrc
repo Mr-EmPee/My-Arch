@@ -13,3 +13,5 @@ if [ -f ~/.local/.bashrc ]; then
 fi
 
 alias fav='~/.config/hypr/scripts/fav-search.sh'
+
+PATH=$PATH:~/.scripts

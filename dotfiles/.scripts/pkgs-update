@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+HOLDS=(
+    intel-ucode=20260811-1
+)
+
+sudo -v
+yay -Sy
+
+ignore=()
+while read -r pkg _ _ new _; do
+    for hold in "${HOLDS[@]}"; do
+        [[ $hold == "$pkg" ]] && ignore+=("$pkg")
+        [[ $hold == "$pkg="* && $new == ${hold#*=} ]] && ignore+=("$pkg")
+    done
+done < <(yay -Qu </dev/null || true)
+
+if ((${#ignore[@]})); then
+    yay -Su --ignore "$(IFS=,; echo "${ignore[*]}")" "$@"
+else
+    yay -Su "$@"
+fi

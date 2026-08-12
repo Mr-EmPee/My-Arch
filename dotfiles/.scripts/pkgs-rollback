@@ -1,0 +1,191 @@
+#!/usr/bin/env bash
+# Roll the installed packages back to the state they had at a point in time,
+# reconstructed from the pacman log via paclog(1) and satisfied from the
+# package cache.
+set -euo pipefail
+
+LOGFILE=/var/log/pacman.log
+ABSENT=$'\x01' # sentinel: package was not installed at the cutoff
+
+usage() {
+    cat <<'EOF'
+usage: pkgs-rollback <timeframe> [options]
+
+timeframe:
+    <N>[smhdw]      relative, e.g. 1h, 30m, 2d, 1w
+    <date>          anything date(1) understands, e.g. "2026-08-01 12:00"
+
+options:
+    -n, --dry-run   only show what would be done
+    -k, --skip-missing
+                    skip packages whose cached version is gone instead of
+                    aborting
+        --no-remove keep packages that were installed inside the timeframe
+    -h, --help      show this help
+EOF
+}
+
+die() {
+    printf 'pkgs-rollback: %s\n' "$1" >&2
+    exit 1
+}
+
+timeframe=""
+dry_run=0
+skip_missing=0
+do_remove=1
+
+while (($#)); do
+    case $1 in
+    -n | --dry-run) dry_run=1 ;;
+    -k | --skip-missing) skip_missing=1 ;;
+    --no-remove) do_remove=0 ;;
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    -*) die "unknown option: $1" ;;
+    *)
+        [[ -n $timeframe ]] && die "unexpected argument: $1"
+        timeframe=$1
+        ;;
+    esac
+    shift
+done
+
+[[ -n $timeframe ]] || {
+    usage >&2
+    exit 1
+}
+
+if [[ $timeframe =~ ^([0-9]+)([smhdw])$ ]]; then
+    declare -A units=([s]=seconds [m]=minutes [h]=hours [d]=days [w]=weeks)
+    spec="${BASH_REMATCH[1]} ${units[${BASH_REMATCH[2]}]} ago"
+else
+    spec=$timeframe
+fi
+
+cutoff=$(date -d "$spec" +%Y-%m-%dT%H:%M:%S%z) ||
+    die "cannot parse timeframe: $timeframe"
+
+printf 'Rolling back to package state of %s\n\n' "$(date -d "$spec" '+%F %T')"
+
+# Cache directories to look for the old package files in. The AUR helpers keep
+# their built packages one level deeper, under a per-package directory.
+mapfile -t cachedirs < <(
+    awk -F= '/^[[:space:]]*CacheDir[[:space:]]*=/ {gsub(/^[ \t]+|[ \t]+$/,"",$2); print $2}' \
+        /etc/pacman.conf
+)
+((${#cachedirs[@]})) || cachedirs=(/var/cache/pacman/pkg)
+
+XDG_CACHE_HOME=${XDG_CACHE_HOME:-$HOME/.cache}
+nested=("$XDG_CACHE_HOME/yay" "$XDG_CACHE_HOME/paru/clone")
+
+# Walk the log entries after the cutoff, chronologically. `orig` keeps the
+# version each package had at the cutoff (first state we see), `curr` the
+# version it has now.
+declare -A orig curr
+while read -r action pkg versions; do
+    versions=${versions#(}
+    versions=${versions%)}
+    old=${versions%% ->*}
+    new=${versions##*-> }
+
+    case $action in
+    installed)
+        [[ -v orig[$pkg] ]] || orig[$pkg]=$ABSENT
+        curr[$pkg]=$new
+        ;;
+    upgraded | downgraded)
+        [[ -v orig[$pkg] ]] || orig[$pkg]=$old
+        curr[$pkg]=$new
+        ;;
+    reinstalled)
+        [[ -v orig[$pkg] ]] || orig[$pkg]=$new
+        curr[$pkg]=$new
+        ;;
+    removed)
+        [[ -v orig[$pkg] ]] || orig[$pkg]=$old
+        curr[$pkg]=$ABSENT
+        ;;
+    esac
+done < <(
+    paclog --after="$cutoff" <"$LOGFILE" |
+        sed -nE 's/^\[[^]]+\] \[ALPM\] (installed|removed|upgraded|downgraded|reinstalled) (\S+) (\(.*\))$/\1 \2 \3/p'
+)
+
+# Turn the diff into pacman operations.
+declare -a files=() restore=() missing=() drop=()
+for pkg in "${!orig[@]}"; do
+    want=${orig[$pkg]}
+    have=${curr[$pkg]}
+    [[ $want == "$have" ]] && continue
+
+    if [[ $want == "$ABSENT" ]]; then
+        drop+=("$pkg")
+        continue
+    fi
+
+    file=""
+    for dir in "${cachedirs[@]}" "${nested[@]/%//$pkg}"; do
+        for candidate in "$dir/$pkg-$want-"*.pkg.tar*; do
+            [[ -f $candidate && $candidate != *.sig ]] || continue
+            file=$candidate
+            break 2
+        done
+    done
+
+    if [[ -n $file ]]; then
+        files+=("$file")
+        restore+=("$pkg $have -> $want")
+    else
+        missing+=("$pkg $want")
+    fi
+done
+
+if ((${#restore[@]})); then
+    printf 'Downgrade/restore (%d):\n' "${#restore[@]}"
+    printf '  %s\n' "${restore[@]}" | sort
+    echo
+fi
+
+if ((${#drop[@]})) && ((do_remove)); then
+    printf 'Remove (%d):\n' "${#drop[@]}"
+    printf '  %s\n' "${drop[@]}" | sort
+    echo
+fi
+
+if ((${#missing[@]})); then
+    printf 'Not in cache (%d):\n' "${#missing[@]}"
+    printf '  %s\n' "${missing[@]}" | sort
+    echo
+    ((skip_missing)) ||
+        die "missing cached packages; rerun with -k to skip them"
+fi
+
+if ((${#files[@]} == 0)) && { ((${#drop[@]} == 0)) || ((do_remove == 0)); }; then
+    echo "Nothing to roll back."
+    exit 0
+fi
+
+if ((dry_run)); then
+    if ((${#files[@]})); then
+        printf 'would run: pacman -U %s\n' "${files[*]}"
+    fi
+    if ((${#drop[@]})) && ((do_remove)); then
+        printf 'would run: pacman -R %s\n' "${drop[*]}"
+    fi
+    exit 0
+fi
+
+read -rp "Proceed? [y/N] " reply
+[[ $reply == [yY]* ]] || die "aborted"
+
+if ((${#files[@]})); then
+    sudo pacman -U "${files[@]}"
+fi
+if ((${#drop[@]})) && ((do_remove)); then
+    sudo pacman -R "${drop[@]}"
+fi
+
+exit 0
