@@ -12,9 +12,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Dotfiles
 sudo pacman -S stow
 
-mkdir -p ~/.config ~/.local ~/.wallpapers
-
-stow -v -t ~ -d "$SCRIPT_DIR/../dotfiles" .
+stow --no-folding -v -t ~ -d "$SCRIPT_DIR/../dotfiles" .
 
 # System Time
 sudo timedatectl set-ntp true
