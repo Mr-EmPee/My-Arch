@@ -17,7 +17,7 @@ while read -r pkg _ _ new _; do
 done < <(yay -Qu </dev/null || true)
 
 if ((${#ignore[@]})); then
-    yay -Su --ignore "$(IFS=,; echo "${ignore[*]}")" "$@"
+    yay -Su --noconfirm --diffmenu --answerdiff All --ignore "$(IFS=,; echo "${ignore[*]}")" "$@"
 else
-    yay -Su "$@"
+    yay -Su --noconfirm --diffmenu --answerdiff All "$@"
 fi
