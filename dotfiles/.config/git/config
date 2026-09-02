@@ -5,3 +5,6 @@
 	helper = /usr/lib/git-core/git-credential-libsecret
 [core]
 	autocrlf = input
+[trace2]
+	eventTarget = af_unix:stream:/home/empee/.git-ai/internal/daemon/trace2.sock
+	eventNesting = 0

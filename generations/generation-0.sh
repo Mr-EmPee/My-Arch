@@ -43,7 +43,7 @@ sudo pacman -S uwsm \
 sudo pacman -S waybar power-profiles-daemon 
 
 # Wallpaper
-yay --answerdiff None --answerclean None --removemake -S mpvpaper
+yay --answerdiff None --answerclean None --removemake -S gslapper
 
 # Wayland
 sudo pacman -S rofi

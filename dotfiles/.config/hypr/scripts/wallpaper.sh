@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Launch mpvpaper in the background and save its PID
-mpvpaper -o 'no-audio --loop-playlist shuffle' ALL ~/.wallpapers &
+gslapper -o 'no-audio --loop-playlist shuffle' ALL ~/.wallpapers/active.mp4 &
 clientPid=$!
 echo "Launched mpvpaper with PID $clientPid"
 
