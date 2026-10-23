@@ -5,6 +5,23 @@ HOLDS=(
     intel-ucode=20260811-1
 )
 
+readonly AUR_MIN_AGE_SECONDS=$((24 * 60 * 60))
+
+# This is a local option, not a yay option.  Strip it before passing the
+# remaining arguments on to yay.
+ignore_aur_age=false
+yay_args=()
+for arg in "$@"; do
+    case $arg in
+        --ignore-aur-age)
+            ignore_aur_age=true
+            ;;
+        *)
+            yay_args+=("$arg")
+            ;;
+    esac
+done
+
 sudo -v
 yay -Sy
 
@@ -16,8 +33,38 @@ while read -r pkg _ _ new _; do
     done
 done < <(yay -Qu </dev/null || true)
 
+if ! "$ignore_aur_age"; then
+    now=$(date +%s)
+    if ! aur_update_output=$(yay -Qua --quiet </dev/null); then
+        printf 'Unable to query AUR updates; skipping AUR packages.\n' >&2
+        aur_update_output=$(yay -Qqm)
+    fi
+
+    while read -r pkg; do
+        [[ -z $pkg ]] && continue
+
+        last_modified=$(curl --fail --silent --show-error --get \
+            --data-urlencode "arg[]=$pkg" \
+            'https://aur.archlinux.org/rpc/v5/info' |
+            jq -r --arg pkg "$pkg" '.results[] | select(.Name == $pkg) | .LastModified' |
+            head -n1) || {
+                printf 'Unable to determine the AUR age of %s; skipping it.\n' "$pkg" >&2
+                ignore+=("$pkg")
+                continue
+            }
+
+        if [[ ! $last_modified =~ ^[0-9]+$ ]]; then
+            printf 'Unable to determine the AUR age of %s; skipping it.\n' "$pkg" >&2
+            ignore+=("$pkg")
+        elif ((now - last_modified < AUR_MIN_AGE_SECONDS)); then
+            printf 'Skipping AUR package updated less than 24 hours ago: %s\n' "$pkg" >&2
+            ignore+=("$pkg")
+        fi
+    done <<<"$aur_update_output"
+fi
+
 if ((${#ignore[@]})); then
-    yay -Su --noconfirm --diffmenu --answerdiff All --ignore "$(IFS=,; echo "${ignore[*]}")" "$@"
+    yay -Su --noconfirm --diffmenu --answerdiff All --ignore "$(IFS=,; echo "${ignore[*]}")" "${yay_args[@]}"
 else
-    yay -Su --noconfirm --diffmenu --answerdiff All "$@"
+    yay -Su --noconfirm --diffmenu --answerdiff All "${yay_args[@]}"
 fi
