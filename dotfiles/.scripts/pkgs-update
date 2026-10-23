@@ -23,6 +23,78 @@ for arg in "$@"; do
 done
 
 sudo -v
+
+battery_capacities=()
+for capacity_file in /sys/class/power_supply/BAT*/capacity; do
+    [[ -r $capacity_file ]] || continue
+    read -r capacity <"$capacity_file"
+    [[ $capacity =~ ^[0-9]+$ ]] && battery_capacities+=("$capacity")
+done
+
+on_ac_power=false
+for power_supply in /sys/class/power_supply/*; do
+    [[ -r $power_supply/type && -r $power_supply/online ]] || continue
+    [[ $(<"$power_supply/type") == Mains ]] || continue
+
+    read -r online <"$power_supply/online"
+    [[ $online == 1 ]] && on_ac_power=true
+done
+
+update_firmware=$on_ac_power
+if ! "$on_ac_power" && ((${#battery_capacities[@]})); then
+    update_firmware=true
+    for capacity in "${battery_capacities[@]}"; do
+        if ((capacity <= 50)); then
+            printf 'Battery charge is %s%% (must be greater than 50%%); skipping firmware updates.\n' "$capacity" >&2
+            update_firmware=false
+            break
+        fi
+    done
+fi
+
+if "$update_firmware"; then
+    sudo fwupdmgr refresh --force >/dev/null
+    firmware_updates=$(sudo fwupdmgr get-updates --json --no-unreported-check)
+    mapfile -t firmware_update_devices < <(
+        jq -r '
+            def changelog:
+                gsub("<li[^>]*>"; "\n- ")
+                | gsub("</li>"; "")
+                | gsub("<br[^>]*>"; "\n")
+                | gsub("</p>"; "\n")
+                | gsub("<p[^>]*>"; "")
+                | gsub("<[^>]+>"; "")
+                | gsub("&amp;"; "&")
+                | gsub("&lt;"; "<")
+                | gsub("&gt;"; ">")
+                | gsub("^[[:space:]]+|[[:space:]]+$"; "")
+                | gsub("\n"; "\n    ");
+
+            .Devices[]?
+            | select((.Flags // []) | index("updatable") != null or index("updatable-hidden") != null)
+            | select((.Releases // []) | length > 0)
+            | "\(.Name) (\(.Version // "unknown") → \(.Releases[0].Version // "unknown"))\n  Changes:\n    \((.Releases[0].Description // .Releases[0].Summary // "No changelog provided by the vendor.") | changelog)"
+        ' <<<"$firmware_updates"
+    )
+
+    if ((${#firmware_update_devices[@]})); then
+        printf '\nAvailable firmware updates:\n'
+        printf ' • %s\n' "${firmware_update_devices[@]}"
+        read -rp 'Install these firmware updates after package updates? [y/N] ' reply
+        if [[ $reply == [yY] || $reply == [yY][eE][sS] ]]; then
+            update_firmware=true
+        else
+            update_firmware=false
+            printf 'Skipping firmware updates.\n'
+        fi
+    else
+        update_firmware=false
+        printf 'No firmware updates are available.\n'
+    fi
+elif ((${#battery_capacities[@]} == 0)); then
+    printf 'No battery capacity or AC power detected; skipping firmware updates.\n' >&2
+fi
+
 yay -Sy
 
 ignore=()
@@ -67,4 +139,8 @@ if ((${#ignore[@]})); then
     yay -Su --noconfirm --diffmenu --answerdiff All --ignore "$(IFS=,; echo "${ignore[*]}")" "${yay_args[@]}"
 else
     yay -Su --noconfirm --diffmenu --answerdiff All "${yay_args[@]}"
+fi
+
+if "$update_firmware"; then
+    sudo fwupdmgr update --assume-yes --no-reboot-check
 fi
