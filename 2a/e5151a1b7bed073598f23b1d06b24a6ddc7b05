@@ -1,0 +1,20 @@
+dotfiles/.scripts/pkgs-update
+  s_60fade11bd2276::t_29baab6f74f327 38-42,63
+  s_60fade11bd2276::t_986a2d7b7927fc 8-24,36-37,43-62,64-65,67,69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2ae5151a1b7bed073598f23b1d06b24a6ddc7b05",
+  "prompts": {},
+  "sessions": {
+    "s_60fade11bd2276": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a168e4-8881-7ed0-b547-b6f66cf062aa",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "Manuel Palumbo <manuel.palumbo@email.com>"
+    }
+  }
+}
