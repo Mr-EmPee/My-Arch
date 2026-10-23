@@ -1,0 +1,14 @@
+dotfiles/.config/git/config
+  h_fd0712a22eec2a 8-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cbd1d00ce568bdb0f35974df69d90df067893f92",
+  "prompts": {},
+  "humans": {
+    "h_fd0712a22eec2a": {
+      "author": "Manuel Palumbo <manuel.palumbo@email.com>"
+    }
+  }
+}
