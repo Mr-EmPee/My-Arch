@@ -5,6 +5,11 @@
 	helper = /usr/lib/git-core/git-credential-libsecret
 [core]
 	autocrlf = input
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [trace2]
 	eventTarget = af_unix:stream:/home/empee/.git-ai/internal/daemon/trace2.sock
 	eventNesting = 0
