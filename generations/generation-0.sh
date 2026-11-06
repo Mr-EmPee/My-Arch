@@ -64,8 +64,8 @@ sudo pacman -S mako
 # System update
 sudo pacman -S fwup
 
-# Others reguired by scripts
-sudo pacman -S jq pacutils
+# Others required by scripts
+sudo pacman -S jq pacutils openbsd-netcat
 
 # Netowrk-Manager
 sudo pacman -S network-manager-applet \
