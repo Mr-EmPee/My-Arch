@@ -8,10 +8,17 @@ set -u
 log_file="${XDG_RUNTIME_DIR:-/tmp}/hypr-wallpaper.log"
 pid_file="${XDG_RUNTIME_DIR:-/tmp}/hypr-wallpaper.pid"
 lock_marker="${XDG_RUNTIME_DIR:-/tmp}/hypr-wallpaper-locking"
+ipc_socket="${XDG_RUNTIME_DIR:-/tmp}/hypr-wallpaper.sock"
 cleaned_up=false
 
 log() {
     printf '%(%F %T)T [wallpaper] %s\n' -1 "$*" >>"$log_file"
+}
+
+# Pause the GStreamer pipeline through gSlapper instead of freezing its
+# process, which makes media playback catch up after SIGCONT.
+gslapper_ipc() {
+    printf '%s\n' "$1" | nc -N -U "$ipc_socket" >/dev/null 2>&1 || true
 }
 
 cleanup() {
@@ -25,13 +32,15 @@ cleanup() {
         kill "$wallpaper_pid" 2>/dev/null || true
         wait "$wallpaper_pid" 2>/dev/null || true
     fi
-    rm -f "$pid_file"
+    rm -f "$pid_file" "$ipc_socket"
     log "gslapper exited (status=$status, pid=${wallpaper_pid:-unknown})"
 }
 
-log "starting gslapper (continuous playback; log=$log_file)"
+log "starting gslapper (continuous playback; IPC=$ipc_socket; log=$log_file)"
 printf '%s\n' "$$" >"$pid_file"
-gslapper -o 'no-audio --loop-playlist shuffle' ALL "$HOME/.wallpapers/active.mp4" &
+rm -f "$ipc_socket"
+
+gslapper -I "$ipc_socket" -o 'no-audio --loop-playlist shuffle' ALL "$HOME/.wallpapers/active.mp4" &
 wallpaper_pid=$!
 log "gslapper started (pid=$wallpaper_pid)"
 
@@ -44,7 +53,7 @@ while kill -0 "$wallpaper_pid" 2>/dev/null; do
     # the focused window pauses gslapper during the lockscreen transition.
     if [[ -e "$lock_marker" ]] || pgrep -x hyprlock >/dev/null 2>&1; then
         if [[ "$last_state" != "lockscreen" ]]; then
-            kill -CONT "$wallpaper_pid" 2>/dev/null || true
+            gslapper_ipc resume
             log "lockscreen transition detected; keeping wallpaper running"
             last_state="lockscreen"
         fi
@@ -69,12 +78,12 @@ while kill -0 "$wallpaper_pid" 2>/dev/null; do
 
     if [[ -z "$active_window" ]]; then
         if [[ "$last_state" != "desktop" ]]; then
-            kill -CONT "$wallpaper_pid" 2>/dev/null || true
+            gslapper_ipc resume
             log "desktop visible; resumed wallpaper"
             last_state="desktop"
         fi
     elif [[ "$last_state" != "window" ]]; then
-        kill -STOP "$wallpaper_pid" 2>/dev/null || true
+        gslapper_ipc pause
         log "active window '$active_window'; paused wallpaper"
         last_state="window"
     fi
