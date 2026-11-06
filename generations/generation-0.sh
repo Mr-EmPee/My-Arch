@@ -61,6 +61,9 @@ sudo pacman -S wf-recorder
 # Notification
 sudo pacman -S mako
 
+# System update
+sudo pacman -S fwup
+
 # Others reguired by scripts
 sudo pacman -S jq pacutils
 
